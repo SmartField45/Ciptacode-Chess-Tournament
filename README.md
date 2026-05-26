@@ -1,4 +1,4 @@
-\# CiptaCode Chess Tournament
+# CiptaCode Chess Tournament
 
 
 
@@ -10,11 +10,11 @@ Aplikasi ini dibuat untuk membantu penyelenggara turnamen dalam mengelola pesert
 
 
 
-\## Features
+## Features
 
 
 
-\### Player Management
+### Player Management
 
 \- Add Player
 
@@ -26,7 +26,7 @@ Aplikasi ini dibuat untuk membantu penyelenggara turnamen dalam mengelola pesert
 
 
 
-\### Tournament Management
+### Tournament Management
 
 \- Create Tournament
 
@@ -36,7 +36,7 @@ Aplikasi ini dibuat untuk membantu penyelenggara turnamen dalam mengelola pesert
 
 
 
-\### Swiss Pairing
+### Swiss Pairing
 
 \- Automatic Pairing Generation
 
@@ -46,7 +46,7 @@ Aplikasi ini dibuat untuk membantu penyelenggara turnamen dalam mengelola pesert
 
 
 
-\### Results
+### Results
 
 \- Record Match Results
 
@@ -54,7 +54,7 @@ Aplikasi ini dibuat untuk membantu penyelenggara turnamen dalam mengelola pesert
 
 
 
-\### Standings
+### Standings
 
 \- Live Ranking Updates
 
@@ -62,14 +62,13 @@ Aplikasi ini dibuat untuk membantu penyelenggara turnamen dalam mengelola pesert
 
 
 
-\### Database
+### Database
 
 \- Persistent Data Storage using SQLite
 
 
 
-\## Purpose
-
+## Purpose
 
 
 This project was created as a learning project to practice:
@@ -88,25 +87,19 @@ This project was created as a learning project to practice:
 
 
 
-\## Current Version
-
-
+## Current Version
 
 Version: 1.0.0
 
 
 
-\## Author
+## Author
+
+Muhammad Hani ilma Alfarabi
 
 
 
-Alfarabi
+## License
 
-
-
-\## License
-
-
-
-All Rights Reserved.
+MIT License
 
