@@ -54,6 +54,12 @@ Version: 1.1.0
 ## Programmer
 Muhammad Hani Ilma Alfarabi
 
+## Connect With Us
+
+Bug and Suggestions:
+
+* Email: estuaryinteractive@gmail.com
+
 ## License
 © 2026 Estuary Interactive. MIT License
 
