@@ -24,7 +24,15 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [1.1.0] - 2026-05-26
+## [1.1.0] - 2026-06-21
+
+### Fixed
+* Fixed data input failure bugs.
+* Fixed broken UI layouts.
+
+---
+
+## [1.0.0] - 2026-05-26
 
 ### Added
 * Player management system
@@ -57,8 +65,6 @@ All notable changes to this project will be documented in this file.
 * Fixed Tkinter event binding issues.
 * Fixed database query errors.
 * Fixed pairing generation stability issues.
-* Fixed data input failure bugs.
-* Fixed broken UI layouts.
 
 ### Known Issues
 * Color balancing is not implemented.
