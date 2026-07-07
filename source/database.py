@@ -31,7 +31,6 @@ def get_connection():
 def init_db():
     with get_connection() as connection:
         connection.executescript("""
-            -- Tabel pemain (master)
             CREATE TABLE IF NOT EXISTS players (
                 id      INTEGER PRIMARY KEY AUTOINCREMENT,
                 name    TEXT    NOT NULL,
@@ -39,33 +38,36 @@ def init_db():
                 club    TEXT    DEFAULT ''
             );
  
-            -- Tabel turnamen
             CREATE TABLE IF NOT EXISTS tournaments (
                 id            INTEGER PRIMARY KEY AUTOINCREMENT,
                 name          TEXT    NOT NULL,
                 date          TEXT    DEFAULT '',
+                format        TEXT    DEFAULT 'elimination', -- BARU: format turnamen
                 num_rounds    INTEGER DEFAULT 7,
                 current_round INTEGER DEFAULT 0,
-                status        TEXT    DEFAULT 'pending'  -- pending | ongoing | finished
+                status        TEXT    DEFAULT 'pending'
             );
  
-            -- Relasi turnamen ↔ pemain (many-to-many)
             CREATE TABLE IF NOT EXISTS tournament_players (
                 tournament_id INTEGER REFERENCES tournaments(id),
                 player_id     INTEGER REFERENCES players(id),
                 PRIMARY KEY (tournament_id, player_id)
             );
  
-            -- Tabel pairing per ronde
             CREATE TABLE IF NOT EXISTS pairings (
                 id            INTEGER PRIMARY KEY AUTOINCREMENT,
                 tournament_id INTEGER REFERENCES tournaments(id),
                 round_num     INTEGER NOT NULL,
-                white_id      INTEGER,   -- NULL jika BYE (hitam-nya yang main)
-                black_id      INTEGER,   -- NULL jika BYE (putih-nya yang main)
-                result        TEXT       -- '1-0' | '0-1' | '1/2-1/2' | 'bye' | NULL
+                white_id      INTEGER,
+                black_id      INTEGER,
+                result        TEXT
             );
         """)
+        try:
+            connection.execute(
+                "ALTER TABLE tournaments ADD COLUMN format TEXT DEFAULT 'elimination'")
+        except sqlite3.OperationalError:
+            pass
 # ------------
 # PLAYERS CRUD
 # ------------
@@ -100,10 +102,11 @@ def get_all_players() -> list:
 # ================
 
 
-def create_tournament(name: str, date: str, num_rounds: int) -> int:
+def create_tournament(name: str, date: str, num_rounds: int, format_type: str = 'elimination') -> int:
     with get_connection() as connection:
         cur = connection.execute(
-            "INSERT INTO tournaments (name, date, num_rounds) VALUES (?, ?, ?)", (name, date, num_rounds))
+            "INSERT INTO tournaments (name, date, format, num_rounds) VALUES (?, ?, ?, ?)",
+            (name, date, format_type, num_rounds))
         return cur.lastrowid
 
 
