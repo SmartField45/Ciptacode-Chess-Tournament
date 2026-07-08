@@ -171,7 +171,7 @@ class ChessTournamentApp:
 
         if row is None:
             return _warn('Select a player first to delete')
-        if messagebox.askyesno('Confirm', f"Are you sure you want to delete player'{row[1]}'? This action cannot be undone."):
+        if messagebox.askyesno('Confirm', f"Are you sure you want to delete player '{row[1]}'? This action cannot be undone."):
             db.delete_player(row[0])
             self._refresh_players()
             self._refresh_enroll_list()
@@ -211,7 +211,7 @@ class ChessTournamentApp:
         ctk.CTkOptionMenu(left, variable=self.tournament_rounds_var, values=[
                           str(i) for i in range(1, 16)], width=200).pack(pady=5)
 
-        # RECCOMMENDED ROUNDS INFO
+        # RECOMMENDED ROUNDS INFO
         self.recommended_label = ctk.CTkLabel(
             left, text='', text_color='gray', font=ctk.CTkFont(size=11))
         self.recommended_label.pack(pady=5)
@@ -284,7 +284,8 @@ class ChessTournamentApp:
         _clear(self.tournament_tree)
 
         for t in db.get_all_tournament():
-            fmt = t.get('format', 'elimination').upper()
+            fmt = t.get('format') or 'elimination'
+            fmt = fmt.upper()
             self.tournament_tree.insert('', 'end', values=(
                 t['id'], t['name'], t['date'], fmt, t['num_rounds'], t['status']
             ))
@@ -308,7 +309,7 @@ class ChessTournamentApp:
         enrolled = db.get_enrolled_players(self.current_tournament_id)
 
         fmt = row[3]
-        if fmt == 'elimination':
+        if fmt.lower() == 'elimination':
             rec_rounds = elimination.recommended_rounds(len(enrolled))
         else:
             rec_rounds = swiss.recommended_rounds(len(enrolled))
@@ -324,15 +325,13 @@ class ChessTournamentApp:
         n = len(self.enroll_listbox.curselection())
 
         if n > 0:
-            # Cek format turnamen yang sedang aktif
             fmt = 'elimination'
             if self.current_tournament_id:
                 t = db.get_tournament(self.current_tournament_id)
                 if t:
-                    fmt = t.get('format', 'elimination')
+                    fmt = t.get('format') or 'elimination'
 
-            # Hitung rekomendasi berdasarkan format
-            if fmt == 'elimination':
+            if fmt.lower() == 'elimination':
                 rec = elimination.recommended_rounds(n)
             else:
                 rec = swiss.recommended_rounds(n)
@@ -368,8 +367,7 @@ class ChessTournamentApp:
     def _refresh_enrolled_count(self):
         if self.current_tournament_id:
             n = len(db.get_enrolled_players(self.current_tournament_id))
-
-            self.enrolled_count_label.config(text=f'Enrolled: {n}')
+            self.enrolled_count_label.configure(text=f'Enrolled: {n}')
 
 # ============================
 # TAB 3 - PAIRINGS AND RESULTS
@@ -409,7 +407,7 @@ class ChessTournamentApp:
         if not t:
             return
 
-        self.round_label.config(
+        self.round_label.configure(
             text=f"Round: {t['current_round']} / {t['num_rounds']} ({t['status']})")
 
         for i, p in enumerate(db.get_pairings(self.current_tournament_id, t['current_round']), 1):
@@ -439,10 +437,9 @@ class ChessTournamentApp:
         if len(players) < 2:
             return _warn('At least 2 players are required to generate pairings')
 
-        # Determine the tournament format and generate pairings accordingly
-        t_format = t.get('format', 'elimination')
+        t_format = t.get('format') or 'elimination'
 
-        if t_format == 'elimination':
+        if t_format.lower() == 'elimination':
             if t['current_round'] == 0:
                 prev_results = []
             else:
@@ -508,7 +505,7 @@ class ChessTournamentApp:
 
                         messagebox.showinfo(
                             'Tournament Completed',
-                            f'Tournament "{t["name"]}" has finished!\n\nWinner: {winner["name"]}'
+                            f'🏆 THE TOURNAMENT IS COMPLETE ! 🏆\n\nCONGRATS {winner["name"]} AS WINNER WITH {winner["points"]} POINTS! 🎉\nCHECK STANDINGS FOR THE COMPLETE LEADERBOARD.'
                         )
 
     def _update_status_bar(self):
@@ -516,9 +513,9 @@ class ChessTournamentApp:
             t = db.get_tournament(self.current_tournament_id)
 
             if t:
-                fmt = t.get('format', 'elimination').upper()
+                fmt = t.get('format') or 'elimination'
                 self.status_bar.configure(
-                    text=f"Activated: {t['name']} | Format: {fmt} | Rounds: {t['current_round']} / {t['num_rounds']} | Status: {t['status'].upper()}"
+                    text=f"Activated: {t['name']} | Format: {fmt.upper()} | Rounds: {t['current_round']} / {t['num_rounds']} | Status: {t['status'].upper()}"
                 )
 
 # =================
