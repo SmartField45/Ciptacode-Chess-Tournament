@@ -49,7 +49,7 @@ This project was created as a learning project to practice:
 - Swiss & Single Elimination Tournament Logic
 
 ## Current Version
-Version: 1.2.0
+Version: 1.2.1
 
 ## Programmer
 Muhammad Hani Ilma Alfarabi

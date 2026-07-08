@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2026-07-08
+
+### Fixed
+* **CustomTkinter Compatibility Fix**: Fixed a critical crash where generating pairings or updating enrolled players failed due to using the deprecated Tkinter `.config()` method instead of CustomTkinter's `.configure()` on label widgets (`round_label` and `enrolled_count_label`).
+* **Format Case-Sensitivity Fix**: Improved tournament format validation to properly handle case-insensitive checks (`'elimination'` vs `'ELIMINATION'`) and added fallback values when retrieving tournament types from the database.
+* Fixed an issue where the pairing treeview appeared empty or unresponsive after clicking "Generate Pairings" in Elimination mode.
+
 ## [1.2.0] - 2026-07-07
 
 ### Added
